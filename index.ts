@@ -3,7 +3,8 @@ import bodyParser from 'body-parser';
 const app = express();
 const port = process.env.PORT || 3000;
 import db from './models'
-import seeder from "./seeders/company";
+import seederCompany from "./seeders/company";
+import seederEmployee from "./seeders/employee";
 
 // const createCompany = () => {
 //     company.map(company => {
@@ -16,10 +17,15 @@ import seeder from "./seeders/company";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Company
-app.post('/api/v1/company', seeder.createCompany)
-app.get('/api/v1/companies', seeder.getCompany)
-app.get('/api/v1/companies/:companyId', seeder.getCompanyById)
+// Company EndPoint
+app.post('/api/v1/company', seederCompany.createCompany)
+app.get('/api/v1/companies', seederCompany.getCompany)
+app.get('/api/v1/companies/:companyId', seederCompany.getCompanyById)
+
+// Employee EndPoint
+app.post('/api/v1/employee', seederEmployee.createEmployee)
+app.get('/api/v1/employees', seederEmployee.getEmployee)
+app.get('/api/v1/employee/:employeeId', seederEmployee.getEmployeeById)
 
 
 db.sequelize.sync().then(() => {
